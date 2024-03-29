@@ -63,7 +63,7 @@ const LoginPage = () => {
       {showModal && <Modal dark={theme} handleModal={handleModal} />}
       <button
         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        className="bg-black dark:bg-white dark:text-black text-white rounded-[10px] p-[10px] font-bold absolute top-5 right-10"
+        className="bg-black dark:bg-white dark:text-black text-white rounded-[10px] p-[10px] font-bold absolute top-2 right-2 sm:top-5 sm:right-10"
       >
         {theme === "dark" ? "light" : "dark"}
       </button>
