@@ -4,9 +4,9 @@ import reportWebVitals from "./reportWebVitals";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import ErrorPage from "./pages/ErrorPage";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <LoginPage />,

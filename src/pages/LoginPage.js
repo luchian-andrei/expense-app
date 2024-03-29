@@ -3,9 +3,12 @@ import "../App.css";
 import { useState } from "react";
 import Modal from "../components/Modal";
 import { useNavigate } from "react-router-dom";
+import useLocalStorage from "../components/useLocalStorage";
 
 const LoginPage = () => {
-  const [theme, setTheme] = useState("light");
+  const { setItem, getItem } = useLocalStorage("mode");
+
+  const [theme, setTheme] = useState(getItem());
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
@@ -28,9 +31,7 @@ const LoginPage = () => {
       </h1>
       <form
         className="grid grid-rows-4 justify-center items-center w-full"
-        onSubmit={() =>
-          navigate("/pages/HomePage", { state: { inheritedTheme: theme } })
-        }
+        onSubmit={() => navigate("/pages/HomePage")}
       >
         <input
           type="email"
@@ -51,18 +52,20 @@ const LoginPage = () => {
           {" "}
           I have forgotten my password
         </p>
-        {/* <Link to={"./pages/HomePage"}> */}
         <button
           type="submit"
           className="bg-red-400 rounded-xl p-[10px] font-bold mb-4"
         >
           Submit{" "}
         </button>
-        {/* </Link> */}
       </form>
       {showModal && <Modal dark={theme} handleModal={handleModal} />}
       <button
-        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+        onClick={() => [
+          setTheme(theme === "dark" ? "light" : "dark"),
+          setItem(theme === "dark" ? "light" : "dark"),
+          // console.log(getItem()),
+        ]}
         className="bg-black dark:bg-white dark:text-black text-white rounded-[10px] p-[10px] font-bold absolute top-2 right-2 sm:top-5 sm:right-10"
       >
         {theme === "dark" ? "light" : "dark"}

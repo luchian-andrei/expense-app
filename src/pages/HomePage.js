@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
 import AddModal from "../components/AddModal";
 import SubstractModal from "../components/SubstractModal";
 import TransactionCard from "../components/TransactionCard";
@@ -13,12 +12,16 @@ import {
   faMoon,
   faMoneyBillTransfer,
 } from "@fortawesome/free-solid-svg-icons";
+import useLocalStorage from "../components/useLocalStorage";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
-  const { state } = useLocation();
-  const { inheritedTheme } = state;
+  const { setItem, getItem } = useLocalStorage("mode");
+  const navigate = useNavigate();
 
-  const [theme, setTheme] = useState(inheritedTheme);
+  console.log(getItem());
+
+  const [theme, setTheme] = useState(getItem());
   const [balance, setBalance] = useState(123456);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showSubstractModal, setShowSubstractModal] = useState(false);
@@ -92,7 +95,10 @@ const HomePage = () => {
       }
     >
       <button
-        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+        onClick={() => [
+          setTheme(theme === "dark" ? "light" : "dark"),
+          setItem(theme === "dark" ? "light" : "dark"),
+        ]}
         className="bg-black dark:bg-white dark:text-black hover:bg-white hover:text-black hover:dark:bg-black hover:dark:text-white text-white rounded-lg p-[5px]  font-bold absolute top-1 right-1 sm:top-5 sm:right-10"
       >
         {theme === "dark" ? (
@@ -101,11 +107,12 @@ const HomePage = () => {
           <FontAwesomeIcon icon={faMoon} style={{ color: "lightblue" }} />
         )}
       </button>
-      <Link to={"/"}>
-        <button className="bg-black dark:bg-white dark:text-black text-white rounded-full p-[5px] sm:p-[10px] font-bold absolute top-1 right-10 sm:top-20 sm:right-10">
-          Log Out
-        </button>{" "}
-      </Link>
+      <button
+        className="bg-black dark:bg-white dark:text-black text-white rounded-full p-[5px] sm:p-[10px] font-bold absolute top-1 right-10 sm:top-20 sm:right-10"
+        onClick={() => [navigate("/")]}
+      >
+        Log Out
+      </button>{" "}
       <h1 className="text-violet-800 dark:text-violet-400 font-bold text-3xl  absolute top-0 mt-2 mr-16 sm:mr-0">
         Dashboard{" "}
       </h1>
